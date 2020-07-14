@@ -1,0 +1,611 @@
+//if table is already created then run following queries
+
+DROP TABLE EMP;
+DROP TABLE DEPT;
+DROP TABLE MANAGER;
+DROP TABLE EMPLOYEE;
+DROP TABLE ACCDEPT;
+
+//Q1
+
+CREATE TABLE EMP (EMPNO NUMBER(6),EMPNAME VARCHAR(20) NOT NULL,JOB VARCHAR(10) NOT NULL,MGR NUMBER(8),DEPTNO NUMBER(6),SAL NUMBER(7,2));
+
+ALTER TABLE EMP ADD COMMI NUMBER(5);
+
+ALTER TABLE EMP MODIFY JOB VARCHAR(12);
+
+CREATE TABLE DEPT (DEPTNO NUMBER(5) PRIMARY KEY,DNAME VARCHAR(20),DLOC VARCHAR(20));
+
+ALTER TABLE EMP MODIFY EMPNO INT PRIMARY KEY;
+	ALTER TABLE DEPT ADD FOREIGN KEY(DEPTNO) REFERENCES DEPT(DEPTNO;
+
+ALTER TABLE EMP ADD CHECK(EMPNO>100);
+
+ALTER TABLE EMP MODIFY SAL FLOAT DEFAULT 5000 NOT NULL;
+
+ALTER TABLE EMP ADD DOB DATE;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Q2
+
+INSERT INTO DEPT VALUES(10,'MANAGEMENT','MAIN BLOCK');
+	INSERT INTO DEPT VALUES(20,'DEVELOPMENT','MANUFACTURING UNIT');
+	INSERT INTO DEPT VALUES(30,'MAINTAINANCE','MAIN BLOCK');
+	INSERT INTO DEPT VALUES(40,'TRANSPORT','ADMIN BLOCK');
+	INSERT INTO DEPT VALUES(50,'SALES','HEAD OFFICE');
+
+INSERT INTO EMP(EMPNO, EMPNAME ,JOB, MGR ,DOB ,SAL ,COMMI, DEPTNO)
+VALUES(7369,'SMITH','CLERK',7566,'17-DEC80',800,0,20);
+	INSERT INTO EMP(EMPNO, EMPNAME ,JOB, MGR ,DOB ,SAL ,COMMI, DEPTNO) VALUES(7399,'ASANT','SALESMAN',7566,'20-FEB81',1600,300,20);
+	INSERT INTO EMP(EMPNO, EMPNAME ,JOB, MGR ,DOB ,SAL ,COMMI, DEPTNO)
+VALUES(7499,'ALLEN','SALESMAN',7698,'20-FEB81',1600,300,30);
+	INSERT INTO EMP(EMPNO, EMPNAME ,JOB, MGR ,DOB ,SAL ,COMMI, DEPTNO)
+VALUES(7521,'WARD','SALESMAN',7698,'22-FEB82',1250,500,30);
+	INSERT INTO EMP(EMPNO, EMPNAME ,JOB, MGR ,DOB ,SAL ,COMMI, DEPTNO)
+VALUES(7566,'JONES','MANAGER',7839,'02-APR81',5975,500,20);
+	INSERT INTO EMP(EMPNO, EMPNAME ,JOB, MGR ,DOB ,SAL ,COMMI, DEPTNO)
+VALUES(7698,'BLAKE','MANAGER',7839,'01-MAY79',9850,1400,30);
+	INSERT INTO EMP(EMPNO, EMPNAME ,JOB, MGR ,DOB ,SAL ,COMMI, DEPTNO)
+VALUES(7611,'SCOTT','HOD',7839,'12-JUN76',3000,NULL,10);
+	INSERT INTO EMP(EMPNO, EMPNAME ,JOB ,MGR ,DOB ,SAL ,COMMI, DEPTNO)
+VALUES(7839,'CLARK','CEO',NULL,'16-MAR72',9900,NULL,10);
+	INSERT INTO EMP(EMPNO, EMPNAME ,JOB, MGR ,DOB ,SAL ,COMMI, DEPTNO)
+VALUES(7368,'FORD','SUPERVIS',7366,'17-DEC80',800,0,20);
+	INSERT INTO EMP(EMPNO, EMPNAME ,JOB, MGR ,DOB ,SAL ,COMMI, DEPTNO)
+VALUES(7599,'ALLEY','SALESMAN',7698,'20-FEB81',1600,300,30);
+	INSERT INTO EMP(EMPNO, EMPNAME ,JOB, MGR ,DOB ,SAL ,COMMI, DEPTNO)
+VALUES(7421,'DRANK','CLERCK',7698,'22-JAN82',1250,500,30);
+
+UPDATE EMP SET COMMI=1000 WHERE JOB='MANAGER';
+
+CREATE TABLE EMPLOYEE (EMPNO INTEGER PRIMARY KEY,ENAME VARCHAR(20) NOT NULL,JOB VARCHAR(30) NOT NULL,MGR INTEGER,DEPTNO INTEGER,SAL INTEGER,COMM INTEGER,DOB VARCHAR(10));
+INSERT INTO EMPLOYEE SELECT*FROM EMP;
+
+DELETE FROM EMPLOYEE WHERE JOB='SUPERVIS';
+
+DELETE FROM EMPLOYEE WHERE EMPNO=7599;
+
+SELECT * FROM EMP ORDER BY SAL;
+
+SELECT * FROM EMP ORDER BY SAL DESC;
+
+SELECT * FROM EMP WHERE DEPTNO=30;
+
+SELECT DISTINCT DEPTNO FROM EMP;
+
+SELECT * FROM EMP ORDER BY EMPNAME;
+
+create table manager as select * from EMP where JOB='MANAGER';
+
+select * from emp where commi IS null;
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Q3
+
+select * from EMP where DEPTNO in (20,10);
+
+select * from EMPLOYEE where ENAME like 'S%';
+
+select * from EMPLOYEE where ENAME not like 'S%';
+select * from EMPLOYEE where EMPNO between 7500 and 7600 ;
+Select * from EMPLOYEE where EMPNO not between 7500 and 7600 ;
+select sqrt(SAL) from EMP;
+SELECT COUNT(*) FROM EMP;
+SELECT SUM(SAL),AVG(SAL) FROM EMP;
+select min(SAL) AS MIN_SAL, MAX(SAL) AS MAX_SAL from EMP;
+SELECT SUM(SAL) FROM EMP;
+SELECT JOB,SUM(SAL) FROM EMP GROUP BY JOB;
+select to_char(to_date('14-jul-09'),'month') from dual;
+select to_date(DOB,'DD-MM-YY') from EMP;
+select add_months(DOB,2) from EMP;
+select last_day('05-oct-09') from dual;
+select round(to_date(dob),'month') from emp;
+select round(to_date(dob),'year') from emp;
+select round(to_date(dob),'day') from emp;
+
+select(sysdate-60) from dual;
+select EMPNAME ,SAL , SAL+0.15* SAL from EMP;
+select EMPNAME from EMP where Empname like 'B%' or Empname like 'C%';
+select EMPNAME,SAL,MGR from EMP where SAL in (select min(SAL) from EMP group by MGR);
+select dname, count (empname) from emp, dept where emp.deptno=dept.deptno group by dname;
+select empname from emp where length(empname)<=5;
+select empname from emp where mgr in (7399,7698,7566);
+SELECT COUNT(DISTINCT JOB)FROM EMP;
+select max(sal)-min(sal) from emp;
+select count(distinct deptno) from emp;
+select empname,dob from emp where to_char(dob,'mon')='feb';
+select EMPname from EMP where to_char(dob,'MON') like to_char(sysdate, 'MON');
+select empname from emp where empname like 'S%H';
+select empname from emp where sal>5000;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Q4
+
+SELECT * FROM EMP,DEPT WHERE EMP.DEPTNO=DEPT.DEPTNO AND (DEPT.DNAME='MAINTAINANCE' OR DEPT.DNAME='DEVELOPMENT');
+
+SELECT EMPNAME,SAL FROM EMP WHERE SAL>(SELECT MIN(SAL) FROM EMP) AND JOB LIKE 'M%';
+
+SELECT * FROM EMP WHERE JOB=(SELECT JOB FROM EMP WHERE EMPNAME='JONES');
+
+SELECT * FROM EMP WHERE SAL>(SELECT MAX(SAL) FROM EMP WHERE DEPTNO=30);
+
+SELECT * FROM EMP WHERE JOB=(SELECT JOB FROM EMP WHERE EMPNAME='JONES') AND SAL>=(SELECT SAL FROM EMP WHERE EMPNAME='FORD');
+
+SELECT EMPNAME,JOB FROM EMP WHERE DEPTNO=20 AND JOB=ANY(SELECT JOB FROM EMP E,DEPT D WHERE E.DEPTNO=D.DEPTNO AND D.DNAME='MANAGEMENT');
+
+SELECT * FROM EMP OUTER WHERE SAL>(SELECT AVG(SAL) FROM EMP WHERE DEPTNO=OUTER.DEPTNO);
+
+SELECT EMPNAME,JOB,DNAME FROM EMP E,DEPT D WHERE E.DEPTNO=D.DEPTNO;
+
+SELECT * FROM EMP WHERE JOB=ANY(SELECT E.JOB FROM DEPT D,EMP E WHERE D.DEPTNO=E.DEPTNO AND DLOC='MAIN BLOCK') AND DEPTNO!=(SELECT DEPTNO FROM DEPT WHERE DLOC='MAIN BLOCK');
+
+SELECT * FROM EMP WHERE DEPTNO=10 AND JOB=ANY(SELECT JOB FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND DEPT.DNAME='DEVELOPMENT');
+
+SELECT * FROM EMP WHERE JOB=(SELECT JOB FROM EMP WHERE EMPNAME='FORD') AND SAL=(SELECT SAL FROM EMP WHERE EMPNAME='FORD');
+
+SELECT DNAME FROM DEPT WHERE DEPTNO=ANY(SELECT DEPTNO FROM (SELECT COUNT(JOB) AS NO,DEPTNO FROM EMP WHERE JOB='SALESMAN' GROUP BY DEPTNO) WHERE NO>=2);
+
+//OR	
+
+SELECT DNAME FROM DEPT D WHERE 2<=(SELECT COUNT(EMPNAME) FROM EMP WHERE JOB='SALESMAN' AND DEPTNO=D.DEPTNO);
+
+SELECT * FROM EMP WHERE DEPTNO=20 AND JOB=ANY(SELECT JOB FROM EMP WHERE DEPTNO=30);
+
+SELECT * FROM EMP WHERE SAL>ANY(SELECT MAX(SAL) FROM EMP WHERE DEPTNO=20 OR DEPTNO=30 GROUP BY DEPTNO);
+
+SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO HAVING MAX(SAL)>9000;
+
+SELECT MAX(SAL) FROM EMP GROUP BY EMPNAME HAVING MIN(SAL)>1000 AND MIN(SAL)<5000;
+
+//extra table creation
+
+CREATE TABLE ACCDEPT (DEPTNO NUMBER(4),DNAME VARCHAR(15),DCITY VARCHAR(20));
+
+INSERT ALL INTO ACCDEPT (DNAME,DEPTNO,DCITY) VALUES(10,'MANAGEMENT','MAIN BLOCK') INTO ACCDEPT (DNAME,DEPTNO,DCITY) VALUES(20,'DEVELOPMENT','MANUFACTURING UNIT') INTO ACCDEPT (DNAME,DEPTNO,DCITY) VALUES(30,'MAINTAINANCE','MAIN BLOCK') SELECT 1 FROM DUAL;
+
+SELECT A.DNAME FROM DEPT D,ACCDEPT A WHERE D.DEPTNO=A.DEPTNO;
+
+SELECT EMPNAME FROM EMP WHERE DEPTNO!=ANY(SELECT DEPTNO FROM ACCDEPT);
+
+SELECT * FROM EMP LEFT JOIN DEPT ON DEPT.DEPTNO=EMP.DEPTNO;
+
+SELECT * FROM EMP RIGHT JOIN DEPT ON DEPT.DEPTNO=EMP.DEPTNO;
+
+SELECT * FROM EMP FULL JOIN DEPT ON DEPT.DEPTNO=EMP.DEPTNO;
+
+SELECT E.EMPNAME,M.EMPNAME FROM EMP E,EMP M WHERE E.MGR=M.EMPNO;
+
+SELECT E.EMPNAME,M.SAL FROM EMP E,EMP M WHERE E.MGR=M.EMPNO;
+
+SELECT E.EMPNAME,E.JOB,E.EMPNO,D.DNAME,D.DLOC FROM EMP E, DEPT D WHERE E.DEPTNO=E.DEPTNO AND D.DEPTNO=E.DEPTNO;
+
+SELECT E.EMPNO,E.EMPNAME,E.JOB,M.EMPNAME FROM EMP E,EMP M WHERE E.MGR=M.EMPNO;
+
+SELECT E.EMPNAME,P.EMPNAME FROM EMP E,EMP P WHERE E.SAL=P.SAL AND E.EMPNAME!=P.EMPNAME;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Q5
+
+SELECT DEPTNO FROM DEPT UNION SELECT DEPTNO FROM ACCDEPT;
+
+SELECT DEPTNO FROM DEPT UNION ALL SELECT DEPTNO FROM ACCDEPT;
+
+SELECT DEPTNO FROM DEPT INTERSECT SELECT DEPTNO FROM ACCDEPT;
+
+SELECT DEPTNO FROM DEPT MINUS SELECT DEPTNO FROM ACCDEPT;
+
+CREATE VIEW MANAGERS AS SELECT * FROM EMP WHERE JOB='MANAGER';
+SELECT * FROM MANAGERS;
+
+
+
+CREATE VIEW EMP_ALL AS SELECT E.EMPNO,E.EMPNAME,D.DEPTNO,D.DNAME FROM EMP E, DEPT D WHERE E.DEPTNO=D.DEPTNO AND E.JOB NOT IN('HOD','CEO');
+SELECT * FROM EMP_ALL;
+
+
+
+DROP VIEW EMP_ALL;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Q6
+
+--6.1
+declare
+a number(10);
+b number(10);
+begin
+a:=&a;
+b:=&b;
+dbms_output.put_line('THE PREV VALUES OF A AND B WERE');
+dbms_output.put_line(a);
+dbms_output.put_line(b);
+a:=a+b;
+b:=a-b;
+a:=a-b;
+dbms_output.put_line('THE VALUES OF A AND B ARE');
+dbms_output.put_line(a);
+dbms_output.put_line(b);
+end;
+/
+
+--6.2
+declare
+a number(10);
+b number(10);
+c number(10);
+begin
+a:=&a;
+b:=&b;
+dbms_output.put_line('THE PREV VALUES OF A AND B WERE');
+dbms_output.put_line(a);
+dbms_output.put_line(b);
+c:=a;
+a:=b;
+b:=c;
+dbms_output.put_line('THE VALUES OF A AND B ARE');
+dbms_output.put_line(a);
+dbms_output.put_line(b);
+end;
+/
+
+--6.3
+declare
+a number;
+b number;
+begin
+a:=&a;
+b:=&b;
+if a=b then
+dbms_output.put_line('BOTH ARE EQUAL');
+elsif a>b then
+dbms_output.put_line('A IS GREATER');
+else
+dbms_output.put_line('B IS GREATER');
+end if;
+end;
+/
+
+--6.4
+declare
+java number(10);
+dbms number(10);
+co number(10);
+se number(10); es
+number(10); ppl
+number(10); total
+number(10); avgs
+number(10); per
+number(10);
+dbms_output.put_line('ENTER THE MARKS');
+begin
+java:=&java;
+dbms:=&dbms;
+co:=&co;
+se:=&se;
+es:=&es;
+ppl:=&ppl;
+total:=(java+dbms+co+se+es+ppl);
+per:=(total/600)*100;
+if java<40 or dbms<40 or co<40 or se<40 or es<40 or ppl<40 then
+dbms_output.put_line('FAIL');
+elsif per>75 then
+dbms_output.put_line('GRADE A');
+elsif per>65 and per<75 then
+dbms_output.put_line('GRADE B');
+elsif per>55 and per<65 then
+dbms_output.put_line('GRADE C');
+else
+dbms_output.put_line('INVALID INPUT');
+end if;
+dbms_output.put_line('PERCENTAGE IS '||per);
+dbms_output.put_line('TOTAL IS '||total);
+end;
+/
+
+--6.5
+declare
+a number;
+d number:=0;
+sum1 number:=0;
+begin
+a:=&a;
+while a>0
+loop
+d:=mod(a,10);
+sum1:=sum1+d;
+a:=trunc(a/10);
+end loop;
+dbms_output.put_line('SUM = '|| sum1);
+end;
+/
+
+--6.6
+declare
+a number;
+rev number;
+d number;
+begin
+a:=&a;
+rev:=0;
+while a>0
+loop
+d:=mod(a,10);
+rev:=(rev*10)+d;
+a:=trunc(a/10);
+end loop;
+dbms_output.put_line('REVERSE NUMBER = '|| rev);
+end;
+/
+
+--6.7
+declare
+a number;
+c number:=0;
+i number;
+begin
+a:=&a;
+for i in 1..a
+loop
+if mod(a,i)=0 then
+c:=c+1;
+end if;
+end loop;
+if c=2 then
+dbms_output.put_line(a ||' is a prime number');
+else
+dbms_output.put_line(a ||' is not a prime number');
+end if;
+end;
+/
+
+--6.8
+declare
+n number;
+f number:=1;
+begin
+n:=&n;
+for i in 1..n
+loop
+f:=f*i;
+end loop;
+dbms_output.put_line('Factorial '|| n ||' is '|| f);
+end;
+/
+
+--6.9
+create table areas(radius number(10),area number(6,2));
+
+declare
+pi constant number(4,2):=3.14;
+radius number(5):=3;
+area number(6,2);
+begin
+while radius<7 loop
+area:=pi*power(radius,2);
+insert into areas values(radius,area);
+radius:=radius+1;
+end loop;
+end;
+/
+
+--6.10
+create table acct(name varchar2(10),cur_bal number(10),acctno number(6,2));
+insert into stud values('&sname',&rollno,&marks);
+select * from acct;
+
+declare
+mano number(5);
+mcb number(6,2);
+minibal constant number(7,2):=1000.00;
+fine number(6,2):=100.00;
+begin
+mano:=&mano;
+select cur_bal into mcb from acct where acctno=mano;
+if mcb<minibal then
+update acct set cur_bal=cur_bal-fine where acctno=mano;
+end if;
+end;
+/
+
+
+
+
+
+
+
+EXTRA:
+
+SET LINES 256;
+SET TRIMOUT ON;
+SET TAB OFF;
+SET SERVEROUTPUT ON;
+
+
+
+7.1    create or replace procedure salary(deptid number) as
+         begin
+              update emp set sal=sal+1000 where sal>5000 AND deptno=deptid;
+         end;
+7.2    create or replace procedure salary1(empid number) as
+         begin
+              update emp set sal=sal+sal*(0.1) where empno=empid;
+         end; 
+7.3    create or replace procedure get_sal(dept number) as
+         begin
+                for s in (select * from emp where deptno = dept)
+                loop
+                   dbms_output.put_line(s.sal);
+                end loop;
+           end;
+7.4    create or replace procedure get_nature(dept number) as
+         begin
+            for s in (select * from emp where deptno = dept)
+            loop
+                dbms_output.put_line(s.job);
+             end loop;
+          end;
+7.5   create or replace procedure dep_name(deptid number)  as
+        begin
+           select dept.dname from dept,emp where emp.deptno=dept.deptno;
+        end;
+
+
+8.1
+CREATE OR RELPLACE TRIGGER trig1 before insert on DEPT for each row DECLARE a number; 
+BEGIN 
+if(:new.DEPTNO is Null) then
+raise_application_error(-20001,'error:: DEPTNO cannot be null'); 
+else 
+select count(*) into a from DEPT where DEPTNO =:new.DEPTNO; 
+if(a=1) then 
+raise_application_error(-20002,'error:: cannot have duplicate DEPTNo '); 
+end if; 
+		end if;
+END;
+
+8.2
+CREATE [OR REPLACE] TRIGGER trig2 After delete on DEPT FOR EACH ROW
+BEGIN
+		DELETE FROM emp WHERE emp.deptno=:new.deptno;	
+END;
+
+8.3 
+CREATE TRIGGER trig3 AFTER DELETE ON emp FOR EACH ROW 
+BEGIN
+INSERT INTO log(val1, val2, ...) VALUES (old.val1, old.val2, ...);
+	END;
